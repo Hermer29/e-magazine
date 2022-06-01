@@ -1,0 +1,66 @@
+﻿@using DataAccessFramework.Dao.Teachers
+@using EMagazine.Pages
+@inject DataAccessFramework.QueryFactorySelector QueryFactorySelector
+<div class="table-responsive">
+    <table class="table table-striped table-sm">
+        <thead>
+            <tr>
+                @foreach(var header in _headers)
+                {
+                    <th>@header</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @for(int i = 0; i < Detailing; i++)
+            {
+                if (_dataViews.Count - 1 < i)
+                    break;
+                <tr>
+                    @{var dataView = _dataViews[i];}
+                    @for(int j = 0; j < dataView.HeadersAmount; j++)
+                    {
+                        <td>@dataView[j]</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+
+    [Parameter]
+    public int Detailing { get; set; }
+
+    private string[] _headers;
+    private TeachersQueryFactory _console;
+    private List<DataView> _dataViews = new List<DataView>();
+
+    [Parameter]
+    public string TableName { get; set; }
+    public int HeadersLength => _headers.Length;
+
+    protected override void OnInitialized()
+    {
+        _console = GetQueryFactory();
+
+        switch(TableName)
+        {
+            case "teachers":
+                _headers = new string[] { "id", "name" };
+                var teachers = _console.GetTeachers();
+                foreach(var teacher in teachers)
+                {
+                    _dataViews.Add(new DataView(teacher));
+                }
+                break;
+        }
+    }
+
+    private TeachersQueryFactory GetQueryFactory()
+    {
+        return QueryFactorySelector.TeachersQueryFactory;
+    }
+
+}

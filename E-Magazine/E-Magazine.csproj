@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>E_Magazine</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AdministerConsole\Console.csproj" />
+    <ProjectReference Include="..\UserData\UserData.csproj" />
+  </ItemGroup>
+
+</Project>

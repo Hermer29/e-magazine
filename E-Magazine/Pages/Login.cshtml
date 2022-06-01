@@ -1,0 +1,58 @@
+﻿@page
+@model EMagazine.Pages.LoginModel
+@{
+	ViewData["Title"] = "Вход";
+	ViewData["WrongPass"] = Model.IsWrongPass;
+}
+
+<div id="login">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+<div class="container">
+	@if(Request.Cookies.ContainsKey("session-token") == false)
+		{
+			<div class="card">
+		<article class="card-body">
+			<h4 class="card-title text-center mb-4 mt-1">Войти</h4>
+			<hr>
+			<p class="text-success text-center" text-center">Войдите в ваш личный кабинет</p>
+			<form asp-page="Login">
+			<div class="form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"> <i class="fa fa-user"></i> </span>
+						</div>
+						<input name="login" class="form-control" placeholder="логин" type="text">
+					</div> <!-- input-group.// -->
+			</div> <!-- form-group// -->
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+					</div>
+					<input name="password" class="form-control" placeholder="пароль" type="password"/>
+				</div> <!-- input-group.// -->
+			</div> <!-- form-group// -->
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary btn-block"> Войти  </button>
+			<hr>
+			<p class="text-danger text-center" style="visibility:@((bool)ViewData["WrongPass"]? "visible" : "hidden")" text-center">Неправильно введен логин или пароль</p>
+			</div> <!-- form-group// -->
+			</form>
+		<p class="text-center"><a href="#" class="btn">Забыли пароль?</a></p>
+		</article>
+	</div> <!-- card.// -->
+	}
+	else
+	{
+		<p class="text-center">Вы уже вошли в систему. <a href="@Model.WorkPageLink">Перейти к рабочей странице</a></p>
+	}
+	
+</div> <!-- row.// -->
+<!--container end.//-->
+</div>
